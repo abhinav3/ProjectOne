@@ -53,11 +53,18 @@ public class GridViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
         ImageView imageView;
+
+        /**
+         * Layout inflation is costly, call it only when row is null.
+         * we need to inflate only while recycling, and already find the views only once.
+         */
+
         if(row == null){
             LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
             row = inflater.inflate(R.layout.grid_item_layout, parent, false);
 
         }
+        //findViewById searches the view hierarchy every time. It's quite expensive.
         imageView = (ImageView) row.findViewById(R.id.grid_image);
 
         Picasso.with(mContext)
